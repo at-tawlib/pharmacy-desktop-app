@@ -1,3 +1,4 @@
+console.log("Running the app")
 const { app, BrowserWindow } = require("electron");
 import * as path from "path";
 

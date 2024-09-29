@@ -1,9 +1,11 @@
-import { useState } from "react";
+import AppRouter from "./routes/AppRouter";
+import ThemeProvider from "./theme";
 
-function App() {
-  const [count, setCount] = useState(0);
-
-  return <h1>Welcome to the Pharmacy dashboard</h1>;
+// TODO: Providers (QueryClient etc.), context etc
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AppRouter />
+    </ThemeProvider>
+  );
 }
-
-export default App;

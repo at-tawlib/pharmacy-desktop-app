@@ -17,6 +17,7 @@ function _interopNamespaceDefault(e) {
   return Object.freeze(n);
 }
 const path__namespace = /* @__PURE__ */ _interopNamespaceDefault(path);
+console.log("Running the app");
 const { app, BrowserWindow } = require("electron");
 let mainWindow;
 const createWindow = () => {
