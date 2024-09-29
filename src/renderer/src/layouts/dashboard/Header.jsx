@@ -40,6 +40,7 @@ export default function Header({ user, onOpenNav }) {
         sx={{
           height: 1,
           px: { lg: 5 },
+          backgroundColor: theme.palette.grey[300],
         }}
       >
         {!lgUp && (

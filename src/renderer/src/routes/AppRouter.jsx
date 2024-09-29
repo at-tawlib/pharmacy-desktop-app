@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 import { Outlet, useRoutes } from "react-router-dom";
 import DashboardLayout from "../layouts/dashboard";
 
-export const IndexPage = lazy(() => import("../pages/IndexPage"));
+export const Dashboard = lazy(() => import("../sections/dashboard"));
 
 /**
  * Defines routing configuration and components using React Router for the application.
@@ -19,7 +19,7 @@ export default function AppRouter() {
           </Suspense>
         </DashboardLayout>
       ),
-      children: [{ element: <IndexPage />, index: true }],
+      children: [{ element: <Dashboard />, index: true }],
     },
   ]);
 
