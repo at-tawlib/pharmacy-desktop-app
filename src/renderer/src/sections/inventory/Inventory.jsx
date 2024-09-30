@@ -23,8 +23,9 @@ import {
   TableToolbar,
 } from "../../components/table";
 import { emptyRows } from "../../utils/table-filter";
-import { MEDICINE_PATH } from "../../constants/paths";
+import { ADD_MEDICINE_PATH, MEDICINE_PATH } from "../../constants/paths";
 import { useRouter } from "../../routes/hooks/use-route";
+import RouterLink from "../../routes/components/RouterLink";
 
 export default function Inventory() {
   const theme = useTheme();
@@ -65,7 +66,12 @@ export default function Inventory() {
           </Typography>
         </Stack>
 
-        <Button variant="contained" color="inherit">
+        <Button
+          component={RouterLink}
+          to={ADD_MEDICINE_PATH}
+          variant="contained"
+          color="inherit"
+        >
           Add New Medicine
         </Button>
       </Stack>
