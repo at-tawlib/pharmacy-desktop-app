@@ -41,7 +41,7 @@ const SummaryCard = ({ title, actionText, stats }) => {
           <Typography variant="h6">{title}</Typography>
           <Typography variant="caption">{actionText}</Typography>
         </Stack>
-        <Divider color={(theme) => theme.palette.grey[500]} />
+        <Divider sx={{ color: (theme) => theme.palette.grey[500] }} />
 
         <Stack direction="row" spacing={2} p={2}>
           {stats.map((stat, index) => (

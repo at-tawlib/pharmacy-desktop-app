@@ -23,9 +23,12 @@ import {
   TableToolbar,
 } from "../../components/table";
 import { emptyRows } from "../../utils/table-filter";
+import { MEDICINE_PATH } from "../../constants/paths";
+import { useRouter } from "../../routes/hooks/use-route";
 
 export default function Inventory() {
   const theme = useTheme();
+  const router = useRouter();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -44,6 +47,9 @@ export default function Inventory() {
     setPage(0); // Reset to the first page when rows per page changes
   };
 
+  const handleClick = () => {
+    router.push(MEDICINE_PATH);
+  };
   return (
     <Container>
       <Stack
@@ -104,7 +110,14 @@ export default function Inventory() {
               />
               <TableBody>
                 {paginatedMedicines.map((medicine) => (
-                  <TableRow key={medicine.id}>
+                  <TableRow
+                    key={medicine.id}
+                    hover
+                    sx={{ cursor: "pointer" }}
+                    onClick={() => {
+                      router.push(MEDICINE_PATH);
+                    }}
+                  >
                     <TableCell>{medicine.medication_name}</TableCell>
                     <TableCell>{medicine.category}</TableCell>
                     <TableCell>{medicine.price}</TableCell>
@@ -113,7 +126,7 @@ export default function Inventory() {
                   </TableRow>
                 ))}
               </TableBody>
-              
+
               <TableEmptyRows
                 height={10}
                 emptyRows={emptyRows(page, rowsPerPage, medicines.length)}
