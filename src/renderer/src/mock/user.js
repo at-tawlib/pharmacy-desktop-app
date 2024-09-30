@@ -1,5 +1,3 @@
-import { last } from "lodash";
-
 // Mock user data
 export const mockUser = {
   firstName: "John",

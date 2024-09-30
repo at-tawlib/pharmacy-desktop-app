@@ -1,8 +1,8 @@
 import {
   LOGIN_PATH,
-  USERS_PATHS,
   DASHBOARD_PATH,
   PATH_NOT_FOUND,
+  INVENTORY_PATH,
 } from "../../constants/paths";
 
 // TODO: add and implement SvgColor component (Icons)
@@ -12,8 +12,8 @@ const navConfig = [
     path: DASHBOARD_PATH,
   },
   {
-    title: "user",
-    path: USERS_PATHS.HOME,
+    title: "inventory",
+    path: INVENTORY_PATH,
   },
   {
     title: "login",
