@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Box,
@@ -8,7 +8,13 @@ import {
   Drawer,
   Typography,
   ListItemButton,
+  Collapse,
+  List,
+  ListItemText,
+  IconButton,
+  ListItem,
 } from "@mui/material";
+import Iconify from "../../components/iconify";
 
 import RouterLink from "../../routes/components";
 import { usePathname } from "../../routes/hooks/use-pathname";
@@ -34,10 +40,11 @@ export default function Nav({ user, openNav, onCloseNav }) {
     <Box
       sx={{
         my: 3,
-        py: 2,
+        py: 6,
         px: 2.5,
         display: "flex",
         alignItems: "center",
+        bgcolor: (theme) => theme.palette.primary.dark,
       }}
     >
       <Avatar
@@ -130,45 +137,95 @@ Nav.propTypes = {
   onCloseNav: PropTypes.func,
   user: PropTypes.object,
 };
-
 function NavItem({ item }) {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const hasChildren = !!item.children; // Check if item has submenu items
+  const active = item.path === pathname; // Check if item is active
 
-  const active = item.path === pathname;
+  const handleClick = () => {
+    setOpen(!open); // Toggle open state for collapsing/expanding
+  };
 
   return (
-    <ListItemButton
-      component={RouterLink}
-      href={item.path}
-      sx={{
-        minHeight: 44,
-        typography: "body2",
-        textTransform: "capitalize",
-        fontWeight: "fontWeightMedium",
-        "&:hover": {
-          bgcolor: (theme) => alpha(theme.palette.secondary.light, 0.8),
-        },
-        ...(active && {
-          fontWeight: "fontWeightSemiBold",
-          bgcolor: (theme) => alpha(theme.palette.secondary.main, 0.8),
+    <>
+      <ListItem
+        sx={{
+          typography: "body2",
+          textTransform: "capitalize",
+          fontWeight: "fontWeightMedium",
           "&:hover": {
-            bgcolor: (theme) => alpha(theme.palette.secondary.light, 0.8),
+            bgcolor: (theme) => alpha(theme.palette.primary.light, 0.8),
           },
-        }),
-      }}
-    >
-      <Box component="span" sx={{ width: 24, height: 24, mr: 2 }}>
-        {/* TODO: add icons here */}
-        {/* {item.icon} */}
-      </Box>
+          ...(active && {
+            fontWeight: "fontWeightSemiBold",
+            bgcolor: (theme) => alpha(theme.palette.secondary.main, 0.8),
+            "&:hover": {
+              bgcolor: (theme) => alpha(theme.palette.secondary.light, 0.8),
+            },
+          }),
+        }}
+      >
+        <Iconify icon={item.icon} color="white" />
 
-      <Box component="span" color="white">
-        {item.title}{" "}
-      </Box>
-    </ListItemButton>
+        <ListItemButton component={RouterLink} href={item.path}>
+          <ListItemText primary={item.title} sx={{ color: "white" }} />
+        </ListItemButton>
+
+        {hasChildren ? (
+          open ? (
+            <IconButton onClick={handleClick}>
+              <Iconify icon="ic:baseline-expand-less" color="white" />
+            </IconButton>
+          ) : (
+            <IconButton onClick={handleClick}>
+              <Iconify icon="ic:baseline-expand-more" color="white" />
+            </IconButton>
+          )
+        ) : null}
+      </ListItem>
+
+      {hasChildren && (
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List
+            component="div"
+            sx={{
+              bgcolor: (theme) => alpha(theme.palette.primary.dark, 0.8),
+            }}
+            disablePadding
+          >
+            {item.children.map((child) => (
+              <ListItemButton
+                key={child.title}
+                component={RouterLink}
+                href={child.path}
+                sx={{
+                  pl: 4,
+                  ...(child.path === pathname && {
+                    fontWeight: "fontWeightSemiBold",
+                    bgcolor: (theme) =>
+                      alpha(theme.palette.secondary.main, 0.8),
+                    "&:hover": {
+                      bgcolor: (theme) =>
+                        alpha(theme.palette.secondary.light, 0.8),
+                    },
+                  }),
+                }}
+              >
+                <Iconify icon={child.icon} color="white" />
+                <ListItemText
+                  primary={child.title}
+                  sx={{ color: "white", pl: 2 }}
+                />
+              </ListItemButton>
+            ))}
+          </List>
+        </Collapse>
+      )}
+    </>
   );
 }
 
 NavItem.propTypes = {
-  item: PropTypes.object,
+  item: PropTypes.object.isRequired,
 };
