@@ -5,6 +5,7 @@ import {
   INVENTORY_PATH,
   ADD_MEDICINE_PATH,
   MEDICINE_PATH,
+  MEDICINE_GROUP_PATH,
 } from "../../constants/paths";
 
 const navConfig = [
@@ -32,6 +33,11 @@ const navConfig = [
         title: "View Medicine",
         path: MEDICINE_PATH,
         icon: "ic:baseline-remove-red-eye",
+      },
+      {
+        title: "Medicine Groups",
+        path: MEDICINE_GROUP_PATH,
+        icon:"ic:baseline-group-work"
       },
     ],
   },
