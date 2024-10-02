@@ -30,11 +30,13 @@ import {
 import { useRouter } from "../routes/hooks/use-route";
 import RouterLink from "../routes/components/RouterLink";
 import { medicineGroup } from "../mock/medicine-group";
+import { AddGroupDialog } from "../components/dialogs";
 
 export default function MedicineGroup() {
   const theme = useTheme();
   const router = useRouter();
   const [page, setPage] = useState(0);
+  const [open, setOpen] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   // Slice the medicines array to show the rows for the current page
@@ -51,6 +53,8 @@ export default function MedicineGroup() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0); // Reset to the first page when rows per page changes
   };
+
+  const handleClose = () => setOpen(false);
 
   const handleClick = () => {
     router.push(MEDICINE_GROUP_ITEM_PATH);
@@ -101,12 +105,14 @@ export default function MedicineGroup() {
             <Typography variant="h6">Medicine Groups</Typography>
           </Breadcrumbs>
 
-          <Typography variant="body1">
-            List of medicine groups.
-          </Typography>
+          <Typography variant="body1">List of medicine groups.</Typography>
         </Stack>
 
-        <Button variant="contained" color="inherit">
+        <Button
+          variant="contained"
+          color="inherit"
+          onClick={() => setOpen(true)}
+        >
           Add New Group
         </Button>
       </Stack>
@@ -147,6 +153,9 @@ export default function MedicineGroup() {
                 height={10}
                 emptyRows={emptyRows(page, rowsPerPage, medicineGroup.length)}
               />
+
+              {/* Add Group Dialog */}
+              <AddGroupDialog open={open} onClose={handleClose} />
               {/* TODO: TableNoData component for data not found */}
             </Table>
           </TableContainer>

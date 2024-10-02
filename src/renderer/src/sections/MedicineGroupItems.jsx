@@ -21,17 +21,16 @@ import {
   TableToolbar,
 } from "../components/table";
 import { emptyRows } from "../utils/table-filter";
-import {
-  INVENTORY_PATH,
-  MEDICINE_GROUP_PATH,
-} from "../constants/paths";
+import { INVENTORY_PATH, MEDICINE_GROUP_PATH } from "../constants/paths";
 import { useRouter } from "../routes/hooks/use-route";
 import RouterLink from "../routes/components/RouterLink";
 import { medicines } from "../mock/medicine";
+import { AddMedicineToGroup } from "../components/dialogs";
 
 export default function MedicineGroupItems() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [open, setOpen] = useState(false);
 
   // Slice the medicines array to show the rows for the current page
   const reducedMedicines = medicines.slice(0, 5);
@@ -115,7 +114,11 @@ export default function MedicineGroupItems() {
           </Typography>
         </Stack>
 
-        <Button variant="contained" color="inherit">
+        <Button
+          variant="contained"
+          color="inherit"
+          onClick={() => setOpen(true)}
+        >
           Add Medicine to Group
         </Button>
       </Stack>
@@ -151,8 +154,15 @@ export default function MedicineGroupItems() {
 
               <TableEmptyRows
                 height={10}
-                emptyRows={emptyRows(page, rowsPerPage, reducedMedicines.length)}
+                emptyRows={emptyRows(
+                  page,
+                  rowsPerPage,
+                  reducedMedicines.length
+                )}
               />
+
+              {/* Add Medicine to group dialog */}
+              <AddMedicineToGroup open={open} onClose={() => setOpen(false)} />
               {/* TODO: TableNoData component for data not found */}
             </Table>
           </TableContainer>
