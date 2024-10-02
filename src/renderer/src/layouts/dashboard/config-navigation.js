@@ -7,6 +7,9 @@ import {
   MEDICINE_PATH,
   MEDICINE_GROUP_PATH,
   MEDICINE_GROUP_ITEM_PATH,
+  SALES_REPORTS_PATH,
+  PAYMENT_REPORTS_PATH,
+  REPORTS_PATH,
 } from "../../constants/paths";
 
 const navConfig = [
@@ -38,12 +41,29 @@ const navConfig = [
       {
         title: "Medicine Groups",
         path: MEDICINE_GROUP_PATH,
-        icon:"ic:baseline-group-work"
+        icon: "ic:baseline-group-work",
       },
       {
         title: "Medicine Group Items",
         path: MEDICINE_GROUP_ITEM_PATH,
         icon: "ic:baseline-list-alt",
+      },
+    ],
+  },
+  {
+    title: "reports",
+    path: REPORTS_PATH,
+    icon: "ic:round-summarize",
+    children: [
+      {
+        title: "Sales Reports",
+        path: SALES_REPORTS_PATH,
+        icon: "ic:outline-monetization-on",
+      },
+      {
+        title: "Payment Reports",
+        path: PAYMENT_REPORTS_PATH,
+        icon: "ic:baseline-payments",
       },
     ],
   },
