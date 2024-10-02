@@ -6,6 +6,7 @@ import {
   ADD_MEDICINE_PATH,
   MEDICINE_PATH,
   MEDICINE_GROUP_PATH,
+  MEDICINE_GROUP_ITEM_PATH,
 } from "../../constants/paths";
 
 const navConfig = [
@@ -38,6 +39,11 @@ const navConfig = [
         title: "Medicine Groups",
         path: MEDICINE_GROUP_PATH,
         icon:"ic:baseline-group-work"
+      },
+      {
+        title: "Medicine Group Items",
+        path: MEDICINE_GROUP_ITEM_PATH,
+        icon: "ic:baseline-list-alt",
       },
     ],
   },

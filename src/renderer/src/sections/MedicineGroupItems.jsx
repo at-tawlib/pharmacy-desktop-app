@@ -22,23 +22,20 @@ import {
 } from "../components/table";
 import { emptyRows } from "../utils/table-filter";
 import {
-  ADD_MEDICINE_PATH,
   INVENTORY_PATH,
-  MEDICINE_GROUP_ITEM_PATH,
-  MEDICINE_PATH,
+  MEDICINE_GROUP_PATH,
 } from "../constants/paths";
 import { useRouter } from "../routes/hooks/use-route";
 import RouterLink from "../routes/components/RouterLink";
-import { medicineGroup } from "../mock/medicine-group";
+import { medicines } from "../mock/medicine";
 
-export default function MedicineGroup() {
-  const theme = useTheme();
-  const router = useRouter();
+export default function MedicineGroupItems() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   // Slice the medicines array to show the rows for the current page
-  const paginatedGroups = medicineGroup.slice(
+  const reducedMedicines = medicines.slice(0, 5);
+  const paginatedMedicines = reducedMedicines.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
@@ -50,10 +47,6 @@ export default function MedicineGroup() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0); // Reset to the first page when rows per page changes
-  };
-
-  const handleClick = () => {
-    router.push(MEDICINE_GROUP_ITEM_PATH);
   };
 
   return (
@@ -98,54 +91,67 @@ export default function MedicineGroup() {
             >
               Inventory
             </Typography>
-            <Typography variant="h6">Medicine Groups</Typography>
+            <Typography
+              variant="h6"
+              component={RouterLink}
+              to={MEDICINE_GROUP_PATH}
+              sx={{
+                textDecoration: "none",
+                "&:hover": {
+                  textDecoration: "underline",
+                  color: "primary.main",
+                },
+              }}
+              color="inherit"
+              noWrap
+            >
+              Medicine Groups
+            </Typography>
+            <Typography variant="h6">Group 1</Typography>
           </Breadcrumbs>
 
           <Typography variant="body1">
-            List of medicine groups.
+            List of medicines in medicine group.
           </Typography>
         </Stack>
 
         <Button variant="contained" color="inherit">
-          Add New Group
+          Add Medicine to Group
         </Button>
       </Stack>
 
       <Card>
-        <TableToolbar numSelected={0} title="Medicine Groups" />
+        <TableToolbar numSelected={0} title="Medicine Group 1" />
 
         <Scrollbar s={{ maxHeight: "auto" }}>
           <TableContainer sx={{ overflow: "unset" }}>
             <Table>
               <TableHeadCustom
                 headLabel={[
-                  { id: "group_name", label: "Group Name" },
-                  { id: "description", label: "Description" },
-                  { id: "quantity", label: "No. of Medicines" },
+                  { id: "medicine", label: "Medicine" },
+                  { id: "price", label: "Price" },
+                  { id: "stock", label: "Stock" },
                   { id: "action", label: "Action" },
                 ]}
               />
               <TableBody>
-                {paginatedGroups.map((group) => (
-                  <TableRow
-                    key={group.id}
-                    hover
-                    sx={{ cursor: "pointer" }}
-                    onClick={() => {
-                      router.push(MEDICINE_GROUP_ITEM_PATH);
-                    }}
-                  >
-                    <TableCell>{group.group_name}</TableCell>
-                    <TableCell>{group.description}</TableCell>
-                    <TableCell>{group.quantity}</TableCell>
-                    <TableCell />
+                {paginatedMedicines.map((item) => (
+                  <TableRow key={item.id} hover sx={{ cursor: "pointer" }}>
+                    <TableCell>{item.medication_name}</TableCell>
+                    <TableCell>{item.price}</TableCell>
+                    <TableCell>{item.quantity}</TableCell>
+                    <TableCell>
+                      <Button variant="text" sx={{ p: 0 }}>
+                        Remove from group
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
 
               <TableEmptyRows
                 height={10}
-                emptyRows={emptyRows(page, rowsPerPage, medicineGroup.length)}
+                emptyRows={emptyRows(page, rowsPerPage, reducedMedicines.length)}
               />
               {/* TODO: TableNoData component for data not found */}
             </Table>
@@ -154,7 +160,7 @@ export default function MedicineGroup() {
 
         <TablePagination
           component="div"
-          count={medicineGroup.length}
+          count={reducedMedicines.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
