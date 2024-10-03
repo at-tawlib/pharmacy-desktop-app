@@ -5,7 +5,6 @@ import {
   Container,
   Grid,
   MenuItem,
-  Select,
   Stack,
   Table,
   TableBody,
@@ -21,13 +20,11 @@ import Scrollbar from "../../components/scrollbar";
 import { useState } from "react";
 import { TableEmptyRows, TableHeadCustom } from "../../components/table";
 import { emptyRows } from "../../utils/table-filter";
-import {
-  MEDICINE_GROUP_ITEM_PATH,
-} from "../../constants/paths";
 import { useRouter } from "../../routes/hooks/use-route";
 import RouterLink from "../../routes/components/RouterLink";
 import { medicineGroup } from "../../mock/medicine-group";
 import { REPORTS_PATH } from "../../constants/paths";
+import { orders } from "../../mock/orders";
 
 export default function SalesReport() {
   const theme = useTheme();
@@ -35,8 +32,8 @@ export default function SalesReport() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  // Slice the medicines array to show the rows for the current page
-  const paginatedGroups = medicineGroup.slice(
+  // Slice the order array to show the rows for the current page
+  const paginatedGroups = orders.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
@@ -110,17 +107,23 @@ export default function SalesReport() {
         <Grid item xs={4}>
           <Stack direction="column" alignItems="start">
             <Typography variant="body2">Date Range</Typography>
-            <Select
-              variant="standard"
-              defaultValue="today"
-              fullWidth
+            <TextField
+              name="date"
+              value="Today"
+              select
               size="small"
+              required
+              variant="standard"
+              fullWidth
             >
-              <option value="today">Today</option>
-              <option value="yesterday">Yesterday</option>
-              <option value="last-7-days">Last 7 days</option>
-              <option value="last-30-days">Last 30 days</option>
-            </Select>
+              {["Today", "Yesterday", "Last 7 days", "Last 30 days"].map(
+                (option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                )
+              )}
+            </TextField>
           </Stack>
         </Grid>
 
@@ -128,7 +131,7 @@ export default function SalesReport() {
           <Stack direction="column" alignItems="start">
             <Typography variant="body2">Medicine Group</Typography>
             <TextField
-              name="group"
+              name="type"
               value="Oral"
               select
               size="small"
@@ -148,85 +151,72 @@ export default function SalesReport() {
         <Grid item xs={4}>
           <Stack direction="column" alignItems="start">
             <Typography variant="body2">Username</Typography>
-            <Select
-              variant="standard"
-              defaultValue="today"
-              fullWidth
+            <TextField
+              name="user"
+              value="Ali Baba"
+              select
               size="small"
+              required
+              variant="standard"
+              fullWidth
             >
-              <MenuItem value="">Ali Baba</MenuItem>
-              <MenuItem value="">John Doe</MenuItem>
-              <MenuItem value="">Azindo</MenuItem>
-              <MenuItem value="">Kofi Baaboni</MenuItem>
-            </Select>
+              {["Ali Baba", "Azindo Tawlib", "John Doe", "Burburn"].map(
+                (option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                )
+              )}
+            </TextField>
           </Stack>
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} mb={5}>
-        <Grid item xs={12} sm={6} md={3}>
-         
-        </Grid>
-      </Grid>
+      <Card>
+        <Scrollbar s={{ maxHeight: "auto" }}>
+          <TableContainer sx={{ overflow: "unset" }}>
+            <Table>
+              <TableHeadCustom
+                headLabel={[
+                  { id: "order_id", label: "Order ID" },
+                  { id: "date", label: "Date" },
+                  { id: "price", label: "Total Price" },
+                  { id: "items", label: "Items" },
+                  { id: "user", label: "Pharmacist" },
+                ]}
+              />
+              <TableBody>
+                {paginatedGroups.map((group) => (
+                  <TableRow key={group.id} hover sx={{ cursor: "pointer" }}>
+                    <TableCell>{group.id}</TableCell>
+                    <TableCell>{group.date}</TableCell>
+                    <TableCell>{group.price}</TableCell>
+                    <TableCell>{group.items_count}</TableCell>
+                    <TableCell>{group.user}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
 
-      <Grid container spacing={2} mb={5}>
-        <Grid item xs={6}></Grid>
+              <TableEmptyRows
+                height={10}
+                emptyRows={emptyRows(page, rowsPerPage, medicineGroup.length)}
+              />
 
-        <Grid item xs={6}>
-          <Card>
-            <Scrollbar s={{ maxHeight: "auto" }}>
-              <TableContainer sx={{ overflow: "unset" }}>
-                <Table>
-                  <TableHeadCustom
-                    headLabel={[
-                      { id: "order_id", label: "Order ID" },
-                      { id: "date", label: "Date" },
-                      { id: "price", label: "Total Price" },
-                    ]}
-                  />
-                  <TableBody>
-                    {paginatedGroups.map((group) => (
-                      <TableRow
-                        key={group.id}
-                        hover
-                        sx={{ cursor: "pointer" }}
-                        onClick={() => {
-                          router.push(MEDICINE_GROUP_ITEM_PATH);
-                        }}
-                      >
-                        <TableCell>{group.group_name}</TableCell>
-                        <TableCell>{group.description}</TableCell>
-                        <TableCell>{group.quantity}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
+              {/* TODO: TableNoData component for data not found */}
+            </Table>
+          </TableContainer>
+        </Scrollbar>
 
-                  <TableEmptyRows
-                    height={10}
-                    emptyRows={emptyRows(
-                      page,
-                      rowsPerPage,
-                      medicineGroup.length
-                    )}
-                  />
-
-                  {/* TODO: TableNoData component for data not found */}
-                </Table>
-              </TableContainer>
-            </Scrollbar>
-
-            <TablePagination
-              component="div"
-              count={medicineGroup.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              rowsPerPageOptions={[5, 10, 25]}
-            />
-          </Card>
-        </Grid>
-      </Grid>
+        <TablePagination
+          component="div"
+          count={medicineGroup.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          rowsPerPageOptions={[5, 10, 25]}
+        />
+      </Card>
     </Container>
   );
 }
