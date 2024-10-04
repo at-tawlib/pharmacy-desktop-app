@@ -7,7 +7,8 @@ import {
   useTheme,
 } from "@mui/material";
 import SummaryCard from "../../components/summary-card";
-import StatsCard from "../../components/stats-card";
+import StatsCard, { StatsCardLarge } from "../../components/stats-card";
+import MoneyIcon from "@mui/icons-material/Money";
 
 export default function Dashboard() {
   const theme = useTheme();
@@ -59,6 +60,16 @@ export default function Dashboard() {
           borderColor="red"
           cardActionText="View Detailed Report"
         />
+      </Grid>
+
+      <Grid container spacing={3} direction="row" mb={4}>
+        <StatsCardLarge title="Medicines" value="3" bg="green" />
+        <StatsCardLarge title="Sales of Day" value="3000" bg="blue" />
+        <StatsCardLarge title="Sales of Month" value="5400" bg="pink" />
+
+        <StatsCardLarge title="Stock Shortage" value="10" bg="red" />
+        <StatsCardLarge title="Expired Products" value="4" bg="black" />
+        <StatsCardLarge title="Near Expiry" value="12" bg="brown" />
       </Grid>
 
       <Grid container spacing={3} direction="row">
