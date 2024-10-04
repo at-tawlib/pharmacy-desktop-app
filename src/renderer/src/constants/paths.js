@@ -5,6 +5,7 @@ export const DASHBOARD_PATH = "/";
 export const LOGIN_PATH = "/login";
 
 export const USERS_PATH = "/users";
+export const USER_PATH = "/users/user";
 
 export const INVENTORY_PATH = "/inventory";
 export const MEDICINE_PATH = "/inventory/medicine";

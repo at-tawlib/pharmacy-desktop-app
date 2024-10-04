@@ -21,7 +21,7 @@ import {
   TableToolbar,
 } from "../components/table";
 import { emptyRows } from "../utils/table-filter";
-import { INVENTORY_PATH, MEDICINE_GROUP_ITEM_PATH, USERS_PATH } from "../constants/paths";
+import { USER_PATH } from "../constants/paths";
 import { useRouter } from "../routes/hooks/use-route";
 import RouterLink from "../routes/components/RouterLink";
 import { users } from "../mock/users";
@@ -34,7 +34,7 @@ export default function UsersList() {
   const [open, setOpen] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  // Slice the medicines array to show the rows for the current page
+  // Slice the users array to show the rows for the current page
   const paginatedUsers = users.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
@@ -52,7 +52,7 @@ export default function UsersList() {
   const handleClose = () => setOpen(false);
 
   const handleClick = () => {
-    router.push(MEDICINE_GROUP_ITEM_PATH);
+    router.push(USER_PATH);
   };
 
   return (
@@ -97,7 +97,7 @@ export default function UsersList() {
       </Stack>
 
       <Card>
-        <TableToolbar numSelected={0} title="Medicine Groups" />
+        <TableToolbar numSelected={0} title="Users" />
 
         <Scrollbar s={{ maxHeight: "auto" }}>
           <TableContainer sx={{ overflow: "unset" }}>
@@ -118,7 +118,7 @@ export default function UsersList() {
                     hover
                     sx={{ cursor: "pointer" }}
                     onClick={() => {
-                      router.push(MEDICINE_GROUP_ITEM_PATH);
+                      router.push(USER_PATH);
                     }}
                   >
                     <TableCell>{user.id}</TableCell>

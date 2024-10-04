@@ -10,6 +10,7 @@ import {
   PAYMENT_REPORTS_PATH,
   REPORTS_PATH,
   SALES_REPORTS_PATH,
+  USER_PATH,
   USERS_PATH,
 } from "../constants/paths";
 import MedicineGroupItems from "../sections/MedicineGroupItems";
@@ -32,6 +33,7 @@ export const PaymentReports = lazy(() =>
 );
 
 export const UsersList = lazy(() => import("../sections/UsersList"));
+export const User = lazy(() => import("../sections/users/User"));
 
 /**
  * Defines routing configuration and components using React Router for the application.
@@ -61,6 +63,7 @@ export default function AppRouter() {
         { element: <PaymentReports />, path: PAYMENT_REPORTS_PATH },
 
         { element: <UsersList />, path: USERS_PATH },
+        { element: <User />, path: USER_PATH },
       ],
     },
   ]);

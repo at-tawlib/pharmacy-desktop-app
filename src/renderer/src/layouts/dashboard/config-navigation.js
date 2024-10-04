@@ -11,6 +11,7 @@ import {
   PAYMENT_REPORTS_PATH,
   REPORTS_PATH,
   USERS_PATH,
+  USER_PATH,
 } from "../../constants/paths";
 
 const navConfig = [
@@ -25,6 +26,11 @@ const navConfig = [
     children: [
       {
         title: "Add User",
+        icon: "ic:baseline-list-alt",
+      },
+      {
+        title: "View User",
+        path: USER_PATH,
         icon: "ic:baseline-list-alt",
       },
       {
