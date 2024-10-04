@@ -13,7 +13,7 @@ export default function TableToolbar({ numSelected, filterName, onFilterName }) 
   return (
     <Toolbar
       sx={{
-        height: 96,
+        height: 76,
         display: 'flex',
         justifyContent: 'space-between',
         p: (theme) => theme.spacing(0, 1, 0, 3),
@@ -32,6 +32,7 @@ export default function TableToolbar({ numSelected, filterName, onFilterName }) 
           value={filterName}
           onChange={onFilterName}
           placeholder="Search ..."
+          size='small'
           startAdornment={
             <InputAdornment position="start">
               <Iconify
