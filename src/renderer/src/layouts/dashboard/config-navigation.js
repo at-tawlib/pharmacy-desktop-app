@@ -10,6 +10,7 @@ import {
   SALES_REPORTS_PATH,
   PAYMENT_REPORTS_PATH,
   REPORTS_PATH,
+  USERS_PATH,
 } from "../../constants/paths";
 
 const navConfig = [
@@ -17,6 +18,21 @@ const navConfig = [
     title: "dashboard",
     path: DASHBOARD_PATH,
     icon: "material-symbols:dashboard",
+  },
+  {
+    title: "manage users",
+    icon: "material-symbols:inventory",
+    children: [
+      {
+        title: "Add User",
+        icon: "ic:baseline-list-alt",
+      },
+      {
+        title: "List Users",
+        path: USERS_PATH,
+        icon: "ic:round-add-box",
+      },
+    ],
   },
   {
     title: "inventory",
