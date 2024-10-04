@@ -13,13 +13,13 @@
     "preview": "electron-vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@fontsource/roboto": "^5.1.0",
     "@iconify/react": "^4.1.1",
     "@mui/icons-material": "^5.16.7",
     "@mui/lab": "^5.0.0-alpha.147",
-    "@mui/material": "^5.15.18",
+    "@mui/material": "^5.16.7",
     "@reduxjs/toolkit": "^2.2.4",
     "@tanstack/react-query": "^5.28.14",
     "date-fns": "^4.1.0",
